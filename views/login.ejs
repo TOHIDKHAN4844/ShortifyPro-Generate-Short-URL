@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortify: Login</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2f3640;
+            margin-top: 20px;
+        }
+
+        /* Form Section */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        form label {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #57606f;
+        }
+
+        form input[type="text"], form input[type="password"] {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            border: 1px solid #dcdde1;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        form button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #44bd32;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #38a928;
+        }
+
+        /* Error Message */
+        .error-message {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin: 20px 0;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login to Shortify</h1>
+
+    <% if (typeof error !== "undefined" && error) { %>
+        <p class="error-message" style="color: red; font-weight: bold;"><%= error %></p>
+    <% } %>
+    
+
+    <form action="/user/login" method="post">
+        <label for="email">Email</label>
+        <input 
+            type="text" 
+            id="email" 
+            name="email" 
+            placeholder="Enter your email" 
+            required 
+        />
+
+        <label for="password">Password</label>
+        <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Enter your password" 
+            required 
+        />
+
+        <button type="submit">Login</button>
+    </form>
+
+    <footer>
+        &copy; 2024 Shortify. Crafted with ❤️
+    </footer>
+</body>
+</html>

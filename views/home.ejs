@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortify: Your URL Wizard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #2f3640;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        /* Form Section */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        form label {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #57606f;
+        }
+
+        form input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            border: 1px solid #dcdde1;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        form button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #44bd32;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #38a928;
+        }
+
+        /* Table Section */
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            text-align: center;
+            padding: 15px;
+        }
+
+        table th {
+            background-color: #2f3640;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f1f2f6;
+        }
+
+        table tr:hover {
+            background-color: #dcdde1;
+        }
+
+        /* URL Generation Message */
+        .url-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #44bd32;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin: 20px 0;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shortify</h1>
+    <h2>Your URL Wizard</h2>
+
+    <% if (locals.id) { %>
+        <p class="url-message">URL Generated: <a href="http://localhost:8001/url/<%= id %>" target="_blank">http://localhost:8001/url/<%= id %></a></p>
+    <% } %>
+
+    <div>
+        <form method="POST" action="/url">
+            <label for="url">Enter Your Original URL</label>
+            <input 
+                type="text"
+                id="url"
+                name="url"
+                placeholder="https://example.com"
+                required
+            >
+            <button type="submit">Generate Short URL</button>
+        </form>
+    </div>
+
+    <div>
+        <% if (locals.urls) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Serial No.</th>
+                        <th>ShortID</th>
+                        <th>Redirect</th>
+                        <th>Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% urls.forEach((url, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= url.shortId %></td>
+                            <td><a href="<%= url.redirectUrl %>" target="_blank"><%= url.redirectUrl %></a></td>
+                            <td><%= url.visitHistory.length %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+
+    <footer>
+        &copy; 2024 Shortify. Crafted with ❤️
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlInput = document.querySelector('#url');
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                if (!urlInput.value.startsWith('http://') && !urlInput.value.startsWith('https://')) {
+                    alert('Please enter a valid URL starting with "http://" or "https://".');
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
